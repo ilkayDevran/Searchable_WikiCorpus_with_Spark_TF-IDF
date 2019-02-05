@@ -12,13 +12,13 @@ Indicate a term by *__t__*, a document by *__d__*, and the corpus by *__D__*. Te
 
 Inverse document frequency is a numerical measure of how much information a term provides:
 
-![](https://latex.codecogs.com/gif.latex?IDF%28t%2C%20D%29%3Dlog%5Cfrac%7B%7CD%7C&plus;1%7D%7BDF%28t%20%2CD%29&plus;1%7D )
+>![](https://latex.codecogs.com/gif.latex?IDF%28t%2C%20D%29%3Dlog%5Cfrac%7B%7CD%7C&plus;1%7D%7BDF%28t%20%2CD%29&plus;1%7D )
 
 where *__|D|__* is the total number of documents in the corpus. Since logarithm is used, if a term appears in all documents, its IDF value becomes 0. Note that a smoothing term is applied to avoid dividing by zero for terms outside the corpus. The TF-IDF measure is simply the product of TF and IDF:
+>   ![](https://latex.codecogs.com/gif.latex?TFIDF%28t%2Cd%2CD%29%3DTF%28t%2Cd%29.IDF%28t%2CD%29)
 
-![](https://latex.codecogs.com/gif.latex?TFIDF%28t%2Cd%2CD%29%3DTF%28t%2Cd%29.IDF%28t%2CD%29)
-
-This implementation of term frequency utilizes the [hashing trick](http://www.wikizero.biz/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRmVhdHVyZV9oYXNoaW5n). A raw feature is mapped into an index (term) by applying a hash function. Then term frequencies are calculated based on the mapped indices. This approach avoids the need to compute a global term-to-index map, which can be expensive for a large corpus, but it suffers from potential hash collisions, where different raw features may become the same term after hashing. To reduce the chance of collision, we can increase the target feature dimension, i.e., the number of buckets of the hash table. The default feature dimension is: $$2^{20}=1,048,576$$
+This implementation of term frequency utilizes the [hashing trick](http://www.wikizero.biz/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRmVhdHVyZV9oYXNoaW5n). A raw feature is mapped into an index (term) by applying a hash function. Then term frequencies are calculated based on the mapped indices. This approach avoids the need to compute a global term-to-index map, which can be expensive for a large corpus, but it suffers from potential hash collisions, where different raw features may become the same term after hashing. To reduce the chance of collision, we can increase the target feature dimension, i.e., the number of buckets of the hash table. The default feature dimension is: 
+>![](https://latex.codecogs.com/gif.latex?2%5E%7B20%7D%3D1%2C048%2C576)
 ***
 ### Sample Code
 Import necessary libraries and configuration of Spark job. 
