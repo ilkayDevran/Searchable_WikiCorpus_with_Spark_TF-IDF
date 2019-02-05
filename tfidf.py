@@ -12,13 +12,13 @@ rawData = sc.textFile("wikipediaCorpus.tsv")
 
 
 fields = rawData.map(lambda x: x.split("\t"))
-documents = fields.map(lambda x: x[3].split(" ")) #[3]: article ın kendisine bakmak, dokumanın body si 
+documents = fields.map(lambda x: x[3].split(" "))
 
 # Store the document names for later:
 documentNames = fields.map(lambda x: x[1])
 
 
-documents.first()
+print (documents.first())
 
 
 # Now hash the words in each document to their term frequencies:
@@ -34,7 +34,7 @@ tfidf = idf.transform(tf)
 
 # First, let's figure out what hash value "Gettysburg" maps to by finding the
 # index a sparse vector from HashingTF gives us back:
-gettysburgTF = hashingTF.transform(["Gettysburg"])
+gettysburgTF = hashingTF.transform(["şarkıcı"])
 gettysburgHashValue = int(gettysburgTF.indices[0])
 
 
