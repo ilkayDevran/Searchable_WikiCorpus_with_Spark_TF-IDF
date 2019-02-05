@@ -11,10 +11,12 @@ Indicate a term by *__t__*, a document by *__d__*, and the corpus by *__D__*. Te
 >If we only use term frequency to measure the importance, it is very easy to over-emphasize terms that appear very often but carry little information about the document, e.g., “a”, “the”, and “of”. If a term appears very often across the corpus, it means it doesn’t carry special information about a particular document.
 
 Inverse document frequency is a numerical measure of how much information a term provides:
-$$IDF(t, D)=log\frac{|D|+1}{DF(t ,D)+1} $$
+
+![](https://latex.codecogs.com/gif.latex?IDF%28t%2C%20D%29%3Dlog%5Cfrac%7B%7CD%7C&plus;1%7D%7BDF%28t%20%2CD%29&plus;1%7D )
 
 where *__|D|__* is the total number of documents in the corpus. Since logarithm is used, if a term appears in all documents, its IDF value becomes 0. Note that a smoothing term is applied to avoid dividing by zero for terms outside the corpus. The TF-IDF measure is simply the product of TF and IDF:
-$$TFIDF(t,d,D)=TF(t,d).IDF(t,D)$$
+
+![](https://latex.codecogs.com/gif.latex?TFIDF%28t%2Cd%2CD%29%3DTF%28t%2Cd%29.IDF%28t%2CD%29)
 
 This implementation of term frequency utilizes the [hashing trick](http://www.wikizero.biz/index.php?q=aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvRmVhdHVyZV9oYXNoaW5n). A raw feature is mapped into an index (term) by applying a hash function. Then term frequencies are calculated based on the mapped indices. This approach avoids the need to compute a global term-to-index map, which can be expensive for a large corpus, but it suffers from potential hash collisions, where different raw features may become the same term after hashing. To reduce the chance of collision, we can increase the target feature dimension, i.e., the number of buckets of the hash table. The default feature dimension is: $$2^{20}=1,048,576$$
 ***
